@@ -55,28 +55,33 @@ function HHP.GetHolySettings()
             return settings
         end
     else
-        HHP.Debug("GUISettingsGet not available, trying direct DB access")
+        HHP.Debug("GUISettingsGet not available, trying GetSavedVariables")
     end
     
-    if HeroRotationDB and HeroRotationDB.ProfileSelected then
-        local profileName = HeroRotationDB.ProfileSelected
-        HHP.Debug("Selected profile: " .. tostring(profileName))
-        
-        if HeroRotationDB.Profiles and HeroRotationDB.Profiles[profileName] then
-            local profile = HeroRotationDB.Profiles[profileName]
-            HHP.Debug("Profile found in DB")
+    if hr.GetSavedVariables and type(hr.GetSavedVariables) == "function" then
+        local hrDB = hr:GetSavedVariables()
+        if hrDB and hrDB.ProfileSelected then
+            local profileName = hrDB.ProfileSelected
+            HHP.Debug("Selected profile: " .. tostring(profileName))
             
-            if profile.APL and profile.APL.Paladin and profile.APL.Paladin.Holy then
-                HHP.Debug("Holy Paladin settings found in profile!")
-                return profile.APL.Paladin.Holy
+            if hrDB.Profiles and hrDB.Profiles[profileName] then
+                local profile = hrDB.Profiles[profileName]
+                HHP.Debug("Profile found in DB")
+                
+                if profile.APL and profile.APL.Paladin and profile.APL.Paladin.Holy then
+                    HHP.Debug("Holy Paladin settings found in profile!")
+                    return profile.APL.Paladin.Holy
+                else
+                    HHP.Debug("Holy Paladin path not found in profile")
+                end
             else
-                HHP.Debug("Holy Paladin path not found in profile")
+                HHP.Debug("Profile not found in DB")
             end
         else
-            HHP.Debug("Profile not found in DB")
+            HHP.Debug("GetSavedVariables returned no data")
         end
     else
-        HHP.Debug("HeroRotationDB or ProfileSelected not available")
+        HHP.Debug("GetSavedVariables not available")
     end
     
     return nil
@@ -146,6 +151,7 @@ SlashCmdList["HEROHOLYPROFILES"] = function(msg)
         HHP.Print("/hhp save <name> - Speichert aktuelles Profil")
         HHP.Print("/hhp load <name> - Lädt ein Profil")
         HHP.Print("/hhp list - Zeigt alle Profile")
+        HHP.Print("/hhp inspect - Zeigt HeroRotation Methoden")
     elseif cmd == "gui" then
         HHP.ToggleGUI()
     elseif cmd == "check" then
@@ -171,6 +177,8 @@ SlashCmdList["HEROHOLYPROFILES"] = function(msg)
         HHP.LoadProfile(profileName)
     elseif cmd == "list" then
         HHP.ListProfiles()
+    elseif cmd == "inspect" then
+        HHP.InspectHeroRotation()
     else
         HHP.Print("Unbekannter Befehl. Nutze /hhp help für Hilfe.")
     end
