@@ -1,0 +1,22 @@
+tag 3f048823617d28f158ddd6afc638ca71428570b3 11.1.7.01
+Author:	Cilraaz <cilraaz@gmail.com>
+Date:	Sun Jun 29 19:03:41 2025 -0400
+
+commit 5032b4bb2750c53e40f9e6a33814ee745429e5be
+Author: Cilraaz <cilraaz@gmail.com>
+Date:   Sun Jun 29 19:03:23 2025 -0400
+
+    build(TOC): 11.1.7.01 release
+
+commit 82c05fe20cde59fc1cc83015f8345a5ce5b2f00f
+Author: Cilraaz <cilraaz@gmail.com>
+Date:   Sun Jun 29 19:02:36 2025 -0400
+
+    fix(ItemRange): Filter based on HL:CheckRangeTable()
+
+commit 5281b22b444a1af36c3575c102133cb092ca8a06
+Author: Cilraaz <cilraaz@gmail.com>
+Date:   Sun Jun 29 18:50:25 2025 -0400
+
+    chore(DBC): 11.1.7.61609 data
+
